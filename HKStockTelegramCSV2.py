@@ -8,8 +8,8 @@ import io
 
 # --- CONFIGURATION ---
 st.set_page_config(page_title="MarketPulse", page_icon="📈", layout="wide")
-#TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN", "")
-#TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID", "")
+TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN", "")
+TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CAT_ID", "")
 
 
 # Custom CSS
