@@ -8,8 +8,15 @@ import io
 
 # --- CONFIGURATION ---
 st.set_page_config(page_title="MarketPulse", page_icon="📈", layout="wide")
-TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN", "")
-TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CAT_ID", "")
+
+# Load secrets using Streamlit's secrets management
+try:
+    TELEGRAM_BOT_TOKEN = st.secrets["TELEGRAM_BOT_TOKEN"]
+    TELEGRAM_CHAT_ID = st.secrets["TELEGRAM_CHAT_ID"]
+except KeyError:
+    # Fallback to environment variables for local development
+    TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN", "")
+    TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID", "")
 
 
 # Custom CSS
@@ -161,7 +168,7 @@ if not summary_df.empty:
         st.session_state.last_send_date = None
 
     if st.session_state.last_send_date != today_date:
-        if TELEGRAM_CHAT_ID != "YOUR_CHAT_ID_HERE":
+        if TELEGRAM_CHAT_ID and TELEGRAM_CHAT_ID != "YOUR_CHAT_ID_HERE":
             if send_telegram_msg(winners, losers):
                 st.session_state.last_send_date = today_date
                 st.toast("Telegram Summary Sent!")
@@ -185,4 +192,3 @@ if not summary_df.empty:
                                  hide_index=True)
         else:
             st.info("No EMA crossovers found in the last 3 days.")
-
